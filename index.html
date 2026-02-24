@@ -5,19 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Residual Labs — Agents IA & Automation Premium</title>
   <meta name="description" content="Studio technique spécialisé dans les agents IA autonomes, le scraping anti-détection et les backends haute friction. Livraison 2-6 semaines." />
-  <meta name="keywords" content="agents IA, scraping, automation, backend, API, fintech, trading" />
-  <meta name="theme-color" content="#0a0a0f" />
-  
-  <!-- Canonical & OG -->
-  <link rel="canonical" href="https://zyx77550.github.io/residual-labs-site/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Residual Labs — Agents IA & Automation Premium" />
-  <meta property="og:description" content="Studio technique spécialisé dans les agents IA autonomes, le scraping anti-détection et les backends haute friction." />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   
   <style>
     /* ═══════════════════════════════════════════════════════════════════════════════
@@ -38,6 +30,9 @@
       --border-medium: rgba(255, 255, 255, 0.12);
       --glow: rgba(124, 58, 237, 0.25);
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
     }
     
     * {
@@ -60,7 +55,6 @@
       overflow-x: hidden;
     }
     
-    /* Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -185,6 +179,33 @@
       color: var(--accent-secondary);
     }
     
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      font-size: 1.1rem;
+    }
+    
+    .social-icon:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+      transform: translateY(-2px);
+    }
+    
     .nav-cta {
       padding: 0.75rem 1.5rem;
       background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -253,7 +274,7 @@
     .dot-live {
       width: 8px;
       height: 8px;
-      background: #22c55e;
+      background: var(--success);
       border-radius: 50%;
       animation: pulse 2s ease-in-out infinite;
     }
@@ -321,7 +342,7 @@
     }
     
     /* ═══════════════════════════════════════════════════════════════════════════════
-       BENTO GRID LAYOUT
+       LIVE CARDS (BENTO GRID 2.0)
        ═══════════════════════════════════════════════════════════════════════════════ */
     
     .bento-grid {
@@ -331,7 +352,7 @@
       margin-top: 3rem;
     }
     
-    .bento-item {
+    .live-card {
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-light);
@@ -340,9 +361,13 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     
-    .bento-item::before {
+    .live-card::before {
       content: '';
       position: absolute;
       top: 0;
@@ -354,28 +379,192 @@
       transition: opacity 0.3s ease;
     }
     
-    .bento-item:hover {
-      border-color: var(--border-medium);
+    .live-card:hover {
+      border-color: var(--accent-secondary);
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+      box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2), inset 0 0 20px rgba(124, 58, 237, 0.05);
     }
     
-    .bento-item:hover::before {
+    .live-card:hover::before {
       opacity: 1;
     }
     
-    .bento-icon {
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .card-icon {
       font-size: 2.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .card-content {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+    
+    .card-content p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
       margin-bottom: 1rem;
     }
     
-    .bento-item h3 {
-      margin-bottom: 0.75rem;
+    /* Terminal Card */
+    .terminal-output {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--success);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--success);
+      line-height: 1.4;
+      max-height: 150px;
+      overflow: hidden;
+      position: relative;
     }
     
-    .bento-item p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
+    .terminal-line {
+      margin-bottom: 0.5rem;
+      animation: typewriter 0.3s ease-out forwards;
+    }
+    
+    @keyframes typewriter {
+      from {
+        width: 0;
+        opacity: 0;
+      }
+      to {
+        width: 100%;
+        opacity: 1;
+      }
+    }
+    
+    .terminal-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--success);
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+    
+    @keyframes blink {
+      0%, 49%, 100% { opacity: 1; }
+      50%, 99% { opacity: 0; }
+    }
+    
+    /* Radar Card */
+    .radar-container {
+      width: 100%;
+      height: 120px;
+      position: relative;
+      margin: 1rem 0;
+    }
+    
+    .radar-circle {
+      position: absolute;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .radar-circle:nth-child(1) {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .radar-circle:nth-child(2) {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .radar-circle:nth-child(3) {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .radar-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-secondary);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      animation: radar-spin 4s linear infinite;
+      box-shadow: 0 0 10px var(--accent-secondary);
+    }
+    
+    @keyframes radar-spin {
+      from { transform: translate(-50%, -50%) rotate(0deg) translateX(40px) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg) translateX(40px) rotate(-360deg); }
+    }
+    
+    /* Database Card */
+    .db-schema {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    
+    .db-table {
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid var(--accent-secondary);
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-secondary);
+      animation: pulse-db 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-db {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Gears Card */
+    .gears-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      height: 100px;
+    }
+    
+    .gear {
+      font-size: 2rem;
+      animation: rotate-gear 3s linear infinite;
+    }
+    
+    .gear:nth-child(2) {
+      animation: rotate-gear-reverse 3s linear infinite;
+    }
+    
+    @keyframes rotate-gear {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes rotate-gear-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
     }
     
     /* ═══════════════════════════════════════════════════════════════════════════════
@@ -459,6 +648,29 @@
       color: var(--accent-secondary);
     }
     
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    
+    .footer-social a:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--accent-secondary);
+    }
+    
     .footer-bottom {
       text-align: center;
       padding-top: 2rem;
@@ -474,6 +686,10 @@
     @media (max-width: 768px) {
       .nav-links {
         gap: 1rem;
+      }
+      
+      .social-icons {
+        display: none;
       }
       
       .hero-ctas {
@@ -499,6 +715,11 @@
         <a href="#services" class="nav-link">Services</a>
         <a href="#about" class="nav-link">À Propos</a>
         <a href="#contact" class="nav-link">Contact</a>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="social-icon" title="LinkedIn">in</a>
+          <a href="https://x.com/BiliDzz48797" target="_blank" class="social-icon" title="X / Twitter">𝕏</a>
+          <a href="https://discord.gg/residuallabs" target="_blank" class="social-icon" title="Discord">💬</a>
+        </div>
         <button class="nav-cta" onclick="scrollToContact()">Démarrer →</button>
       </div>
     </nav>
@@ -524,46 +745,108 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES avec LIVE CARDS -->
   <section id="services" class="container">
     <h2>Ce que nous construisons</h2>
     <p style="color: var(--text-muted); margin-bottom: 2rem;">Les solutions les plus complexes et les plus exigeantes du marché.</p>
     
     <div class="bento-grid">
-      <div class="bento-item">
-        <div class="bento-icon">🤖</div>
-        <h3>Agents Autonomes</h3>
-        <p>Agents IA qui travaillent 24/7 sans supervision : recherche, génération de contenu, analyse de données, support client.</p>
+      <!-- SCRAPING CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">🕷️</div>
+          <div class="card-title">Scraping & Data</div>
+        </div>
+        <div class="card-content">
+          <p>Extraction de données où d'autres échouent. Cloudflare, DataDome, PerimeterX, JS dynamique, millions de pages.</p>
+          <div class="terminal-output">
+            <div class="terminal-line">$ scraper --target=cloudflare</div>
+            <div class="terminal-line">✓ Bypass successful: 200 OK</div>
+            <div class="terminal-line">✓ Data extracted: 50,000 rows</div>
+            <div class="terminal-line">$ <span class="terminal-cursor"></span></div>
+          </div>
+        </div>
       </div>
       
-      <div class="bento-item">
-        <div class="bento-icon">🕷️</div>
-        <h3>Scraping & Data</h3>
-        <p>Extraction de données où d'autres échouent. Cloudflare, DataDome, PerimeterX, JS dynamique, millions de pages.</p>
+      <!-- AGENTS CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">🤖</div>
+          <div class="card-title">Agents Autonomes</div>
+        </div>
+        <div class="card-content">
+          <p>Agents IA qui travaillent 24/7 sans supervision : recherche, génération de contenu, analyse de données.</p>
+          <div class="radar-container">
+            <div class="radar-circle"></div>
+            <div class="radar-circle"></div>
+            <div class="radar-circle"></div>
+            <div class="radar-dot"></div>
+          </div>
+        </div>
       </div>
       
-      <div class="bento-item">
-        <div class="bento-icon">⚙️</div>
-        <h3>Bots & Automation</h3>
-        <p>Bots sophistiqués indétectables : trading, réservation, gestion de comptes, migration de données, tests de charge.</p>
+      <!-- BACKEND CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">🔧</div>
+          <div class="card-title">Backends & APIs</div>
+        </div>
+        <div class="card-content">
+          <p>APIs REST/GraphQL haute disponibilité, microservices, files d'attente, intégrations tierces.</p>
+          <div class="db-schema">
+            <div class="db-table">users</div>
+            <div class="db-table">orders</div>
+            <div class="db-table">analytics</div>
+            <div class="db-table">cache</div>
+          </div>
+        </div>
       </div>
       
-      <div class="bento-item">
-        <div class="bento-icon">🔧</div>
-        <h3>Backends & APIs</h3>
-        <p>APIs REST/GraphQL haute disponibilité, microservices, files d'attente, intégrations tierces, bases de données optimisées.</p>
+      <!-- AUTOMATION CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">⚙️</div>
+          <div class="card-title">Bots & Automation</div>
+        </div>
+        <div class="card-content">
+          <p>Bots sophistiqués indétectables : trading, réservation, gestion de comptes, migration de données.</p>
+          <div class="gears-container">
+            <div class="gear">⚙️</div>
+            <div class="gear">⚙️</div>
+            <div class="gear">⚙️</div>
+          </div>
+        </div>
       </div>
       
-      <div class="bento-item">
-        <div class="bento-icon">🌐</div>
-        <h3>Applications Web</h3>
-        <p>Du concept au déploiement : apps web modernes, e-commerce, dashboards, PWA. React, Next.js, Flutter.</p>
+      <!-- WEB APPS CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">🌐</div>
+          <div class="card-title">Applications Web</div>
+        </div>
+        <div class="card-content">
+          <p>Du concept au déploiement : apps web modernes, e-commerce, dashboards, PWA. React, Next.js, Flutter.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid var(--accent-secondary); border-radius: 4px; padding: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--accent-secondary);">React</div>
+            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid var(--accent-secondary); border-radius: 4px; padding: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--accent-secondary);">Next.js</div>
+          </div>
+        </div>
       </div>
       
-      <div class="bento-item">
-        <div class="bento-icon">🧠</div>
-        <h3>Multi-Agents</h3>
-        <p>Orchestration de workflows complexes avec plusieurs agents spécialisés qui collaborent et gèrent les erreurs.</p>
+      <!-- MULTI-AGENTS CARD -->
+      <div class="live-card">
+        <div class="card-header">
+          <div class="card-icon">🧠</div>
+          <div class="card-title">Multi-Agents</div>
+        </div>
+        <div class="card-content">
+          <p>Orchestration de workflows complexes avec plusieurs agents spécialisés qui collaborent et gèrent les erreurs.</p>
+          <div style="display: flex; justify-content: space-around; margin-top: 1rem; font-size: 1.5rem;">
+            <span>🔗</span>
+            <span>🔗</span>
+            <span>🔗</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -605,6 +888,11 @@
         <div class="footer-section">
           <h4>Residual Labs</h4>
           <p>Studio technique spécialisé dans les agents IA, le scraping complexe et les backends haute friction.</p>
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" title="LinkedIn">in</a>
+            <a href="https://x.com/BiliDzz48797" target="_blank" title="X / Twitter">𝕏</a>
+            <a href="https://discord.gg/residuallabs" target="_blank" title="Discord">💬</a>
+          </div>
         </div>
         <div class="footer-section">
           <h4>Navigation</h4>
@@ -619,6 +907,7 @@
           <ul>
             <li><a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank">LinkedIn</a></li>
             <li><a href="https://x.com/BiliDzz48797" target="_blank">X / Twitter</a></li>
+            <li><a href="https://discord.gg/residuallabs" target="_blank">Discord</a></li>
           </ul>
         </div>
       </div>
@@ -635,16 +924,16 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
     
-    // Animation des éléments au scroll
-    gsap.utils.toArray('.bento-item').forEach(element => {
+    // Animation des live cards au scroll
+    gsap.utils.toArray('.live-card').forEach((element, index) => {
       gsap.from(element, {
         opacity: 0,
         y: 50,
         duration: 0.8,
+        delay: index * 0.1,
         scrollTrigger: {
           trigger: element,
-          start: 'top 80%',
-          markers: false
+          start: 'top 80%'
         }
       });
     });
