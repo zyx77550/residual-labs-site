@@ -1,6 +1,8 @@
-// Configuration Telegram
-const TELEGRAM_BOT_TOKEN = '8523706065:AAGAC3mealnTsQpF4lDyK5AsznmHRhbjZMo';
-const TELEGRAM_CHAT_ID = '6255000093';
+/**
+ * Configuration Telegram
+ * Les clés API sont maintenant gérées côté serveur via une fonction serverless
+ * Cette approche sécurise vos credentials et respecte les bonnes pratiques
+ */
 
 // Modal functions
 function openModal() {
@@ -64,22 +66,20 @@ ${project}
 Répondre à: ${email}
     `;
 
-    // Send to Telegram
-    const telegramResponse = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: telegramMessage,
-          parse_mode: 'Markdown'
-        })
-      }
-    );
+    // Appeler la fonction serverless au lieu de contacter directement l'API Telegram
+    // Cela protège vos clés API sensibles
+    const telegramResponse = await fetch('/.netlify/functions/send-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: telegramMessage,
+        type: 'contact'
+      })
+    });
 
     if (!telegramResponse.ok) {
-      throw new Error('Erreur Telegram');
+      const error = await telegramResponse.json();
+      throw new Error(error.error || 'Erreur lors de l\'envoi');
     }
 
     // Success

@@ -4,8 +4,6 @@ Allow: /
 Allow: /pages/
 Allow: /assets/
 Disallow: /admin/
-Disallow: /*.json$
-Disallow: /*.xml$
 
 # Sitemap
 Sitemap: https://zyx77550.github.io/residual-labs-site/sitemap.xml

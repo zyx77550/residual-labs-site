@@ -1,0 +1,19 @@
+[build]
+  command = "echo 'Static site - no build needed'"
+  publish = "."
+
+# Redirection pour les fonctions serverless
+[[redirects]]
+  from = "/.netlify/functions/:name"
+  to = "/.netlify/functions/:name"
+  status = 200
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

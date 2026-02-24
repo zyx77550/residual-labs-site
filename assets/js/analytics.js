@@ -1,8 +1,7 @@
 // ── ANALYTICS & TRACKING SYSTEM ──
 // Envoie les données de visite en temps réel sur Telegram
-
-const TELEGRAM_BOT_TOKEN = '8523706065:AAGAC3mealnTsQpF4lDyK5AsznmHRhbjZMo';
-const TELEGRAM_CHAT_ID = '6255000093';
+// Les clés API sont maintenant gérées côté serveur via une fonction serverless
+// Cette approche sécurise vos credentials et respecte les bonnes pratiques
 
 // Classe pour gérer le tracking
 class AnalyticsTracker {
@@ -173,24 +172,21 @@ class AnalyticsTracker {
 
   async sendToTelegram(message) {
     try {
-      const response = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: 'Markdown'
-          })
-        }
-      );
+      // Appeler la fonction serverless au lieu de contacter directement l'API Telegram
+      const response = await fetch('/.netlify/functions/send-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: message,
+          type: 'analytics'
+        })
+      });
 
       if (!response.ok) {
-        console.warn('Telegram send failed');
+        console.warn('Erreur lors de l\'envoi des analytics');
       }
     } catch (e) {
-      console.error('Telegram error:', e);
+      console.error('Erreur analytics:', e);
     }
   }
 }
