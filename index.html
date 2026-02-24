@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Residual Labs — Studio Technique Premium | Agents IA, Scraping, Backends</title>
+  <meta name="description" content="Residual Labs : agents IA autonomes, scraping complexe, backends haute friction. Prix fixe. Livraison 2-6 semaines. Un seul client actif à la fois." />
+  <meta name="keywords" content="agents IA, scraping, backend, API, automation, startup tech" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/hero.css" />
+  <link rel="stylesheet" href="assets/css/modal.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body>
+
+  <!-- MODAL FORM -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 class="modal-title">Décrivez votre projet</h2>
+      <p class="modal-desc">Envoyez-nous les détails. Nous répondons sous 24h.</p>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="name">Nom complet</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Téléphone (optionnel)</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+        <div class="form-group">
+          <label for="project">Décrivez votre projet</label>
+          <textarea id="project" name="project" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer ma demande →</button>
+        <div id="formStatus" class="form-status"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-logo">RESIDUAL<span>.</span>LABS</div>
+      <div class="nav-badge">
+        <span class="dot-live"></span>
+        <span>1 slot disponible</span>
+      </div>
+      <div class="nav-ctas">
+        <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="nav-social" title="LinkedIn">in</a>
+        <a href="https://x.com/BiliDzz48797" target="_blank" class="nav-social" title="X">𝕏</a>
+        <a href="pages/services.html" class="nav-link">Services</a>
+        <a href="pages/portfolio.html" class="nav-link">Portfolio</a>
+        <a href="pages/blog.html" class="nav-link">Blog</a>
+        <button onclick="openModal()" class="nav-cta">Démarrer → 500€</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-tag">
+      <span class="dot-live"></span>
+      Studio technique · 1 client actif à la fois
+    </div>
+
+    <h1>
+      Ce que votre équipe<br />
+      <span class="highlight">reporte indéfiniment</span><br />
+      — on le livre.
+    </h1>
+
+    <p class="hero-sub">
+      Agents IA autonomes, scrapers anti-détection, backends haute friction.<br />
+      Prix fixe. Code source complet. Livraison en 2 à 6 semaines.
+    </p>
+
+    <div class="hero-ctas">
+      <button onclick="openModal()" class="btn-primary">Lancer ma démo — 500€</button>
+      <a href="pages/services.html" class="btn-secondary">Voir nos services</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num"><span class="accent">500€</span></span>
+        <div class="stat-label">Acompte démo</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2–6 <span class="accent">sem.</span></span>
+        <div class="stat-label">Délai de livraison</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Dès <span class="accent">5k€</span></span>
+        <div class="stat-label">Prix fixe, sans surprise</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num"><span class="accent">100%</span></span>
+        <div class="stat-label">Code source à vous</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- URGENCY BANNER -->
+  <div class="container" style="padding-top:0; padding-bottom:0;">
+    <div class="urgency-banner fade-up">
+      <span class="urgency-icon">⚡</span>
+      <span>
+        <strong>Attention :</strong> Nous travaillons sur <strong>un seul projet à la fois</strong>.
+        Le slot actuel se libère prochainement. Premier arrivé, premier servi.
+      </span>
+    </div>
+  </div>
+
+  <!-- PROOF BAR -->
+  <div class="proof-bar">
+    <div class="proof-track">
+      <div class="proof-item">✦ <strong>40h/semaine</strong> économisées — veille concurrentielle</div>
+      <div class="proof-item">✦ <strong>78% des tickets</strong> résolus automatiquement</div>
+      <div class="proof-item">✦ <strong>15 000 TPS</strong> atteints — backend fintech</div>
+      <div class="proof-item">✦ <strong>3.2% ROI/mois</strong> — bot d'arbitrage</div>
+      <div class="proof-item">✦ <strong>99.99% uptime</strong> — 32ms latence</div>
+      <div class="proof-item">✦ <strong>92% satisfaction</strong> client maintenue</div>
+      <div class="proof-item">✦ <strong>40h/semaine</strong> économisées — veille concurrentielle</div>
+      <div class="proof-item">✦ <strong>78% des tickets</strong> résolus automatiquement</div>
+      <div class="proof-item">✦ <strong>15 000 TPS</strong> atteints — backend fintech</div>
+      <div class="proof-item">✦ <strong>3.2% ROI/mois</strong> — bot d'arbitrage</div>
+      <div class="proof-item">✦ <strong>99.99% uptime</strong> — 32ms latence</div>
+      <div class="proof-item">✦ <strong>92% satisfaction</strong> client maintenue</div>
+    </div>
+  </div>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-label">// Ce que nous construisons</div>
+      <h2 class="section-title fade-up">Les systèmes que personne<br />ne veut toucher.</h2>
+      <p class="section-desc fade-up">Pas de réunions. Pas de decks PowerPoint. Pas de facturation à l'heure. Juste des systèmes qui fonctionnent.</p>
+
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="service-icon">🤖</div>
+          <h3>Agents Autonomes</h3>
+          <p>Agents IA qui travaillent 24/7 sans supervision : recherche, génération de contenu, analyse de données, support client, monitoring intelligent.</p>
+          <a href="pages/services.html#agents" class="service-link">En savoir plus →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🕷️</div>
+          <h3>Scraping & Data Extraction</h3>
+          <p>Nous extrayons là où d'autres échouent. Cloudflare, DataDome, PerimeterX, JS dynamique, auth, millions de pages, reverse engineering d'APIs.</p>
+          <a href="pages/services.html#scraping" class="service-link">En savoir plus →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">⚙️</div>
+          <h3>Bots & Automatisation</h3>
+          <p>Bots sophistiqués indétectables : trading, réservation, gestion de comptes, migration de données, tests de charge.</p>
+          <a href="pages/services.html#bots" class="service-link">En savoir plus →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🔧</div>
+          <h3>Backends & APIs</h3>
+          <p>APIs REST/GraphQL haute disponibilité, files d'attente, microservices, intégrations tierces, bases de données optimisées.</p>
+          <a href="pages/services.html#backends" class="service-link">En savoir plus →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🌐</div>
+          <h3>Applications & Sites</h3>
+          <p>Du concept au déploiement : apps web modernes, mobile, e-commerce, dashboards, PWA. React, Next.js, React Native, Flutter.</p>
+          <a href="pages/services.html#apps" class="service-link">En savoir plus →</a>
+        </div>
+        <div class="service-card fade-up">
+          <div class="service-icon">🧠</div>
+          <h3>Architectures Multi-Agents</h3>
+          <p>Orchestration de workflows complexes avec plusieurs agents spécialisés qui collaborent, partagent le contexte et gèrent les erreurs.</p>
+          <a href="pages/services.html#multi-agents" class="service-link">En savoir plus →</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 60px;">
+        <a href="pages/services.html" class="btn-primary">Voir tous les services →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="container">
+      <div style="text-align: center;">
+        <div class="section-label">// Prêt à démarrer ?</div>
+        <h2 class="section-title">Un slot. Votre projet.</h2>
+        <p class="section-desc" style="margin: 0 auto 40px;">Décrivez-nous votre projet. Nous répondons sous 24h avec une analyse et un prix fixe.</p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <button onclick="openModal()" class="btn-primary">Envoyer ma description → 500€</button>
+          <a href="pages/portfolio.html" class="btn-secondary">Voir nos réalisations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">RESIDUAL<span>.</span>LABS</div>
+        <p class="footer-desc">Studio technique spécialisé dans les agents IA, le scraping complexe et les backends haute friction.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="pages/services.html">Services</a></li>
+          <li><a href="pages/portfolio.html">Portfolio</a></li>
+          <li><a href="pages/blog.html">Blog</a></li>
+          <li><a href="pages/faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="pages/pricing.html">Tarifs</a></li>
+          <li><a href="pages/process.html">Notre processus</a></li>
+          <li><a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank">LinkedIn</a></li>
+          <li><a href="#" onclick="openModal(); return false;">Nous contacter</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: <a href="#" onclick="openModal(); return false;">contact@residuallabs.io</a></p>
+        <p>Réponse sous 24h</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Residual Labs. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/global.js"></script>
+  <script src="assets/js/analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Robots.txt for Residual Labs
+User-agent: *
+Allow: /
+Allow: /pages/
+Allow: /assets/
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Sitemap
+Sitemap: https://zyx77550.github.io/residual-labs-site/sitemap.xml
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# User-agent specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

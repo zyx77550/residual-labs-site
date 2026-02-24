@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - Residual Labs</title>
+  <meta name="description" content="Blog Residual Labs : guides complets sur les agents IA, scraping avancé, backends haute performance, bots de trading et architectures multi-agents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/header.css" />
+  <link rel="stylesheet" href="../assets/css/hero.css" />
+  <link rel="stylesheet" href="../assets/css/modal.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .blog-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      background: var(--bg3);
+    }
+
+    .blog-header {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+      padding: 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .blog-icon {
+      font-size: 2rem;
+    }
+
+    .blog-category {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .blog-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .blog-body {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-excerpt {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .blog-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .blog-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .blog-tag {
+      background: var(--bg3);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .blog-footer {
+      margin-top: auto;
+    }
+
+    .blog-cta {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .blog-cta:hover {
+      gap: 8px;
+    }
+
+    .blog-cta::after {
+      content: " →";
+    }
+
+    .blog-filter {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .blog-filter-btn {
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .blog-filter-btn:hover,
+    .blog-filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .blog-featured {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .blog-featured {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MODAL FORM -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 class="modal-title">Décrivez votre projet</h2>
+      <p class="modal-desc">Envoyez-nous les détails. Nous répondons sous 24h.</p>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="name">Nom complet</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Téléphone (optionnel)</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+        <div class="form-group">
+          <label for="project">Décrivez votre projet</label>
+          <textarea id="project" name="project" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer ma demande →</button>
+        <div id="formStatus" class="form-status"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <nav class="navbar">
+      <a href="../index.html" class="nav-logo">RESIDUAL<span>.</span>LABS</a>
+      <div class="nav-badge">
+        <span class="dot-live"></span>
+        <span>1 slot disponible</span>
+      </div>
+      <div class="nav-ctas">
+        <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="nav-social" title="LinkedIn">in</a>
+        <a href="https://x.com/BiliDzz48797" target="_blank" class="nav-social" title="X">𝕏</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="portfolio.html" class="nav-link">Portfolio</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <button onclick="openModal()" class="nav-cta">Démarrer → 500€</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <section class="section-pad" style="margin-top: 80px;">
+    <div class="container">
+      <div class="section-label">// Blog</div>
+      <h1 class="section-title fade-up">Guides Techniques & Insights</h1>
+      <p class="section-desc fade-up">Articles détaillés sur les agents IA, le scraping avancé, les backends haute performance et bien plus.</p>
+    </div>
+  </section>
+
+  <!-- BLOG CONTENT -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="blog-grid">
+        <!-- Article 1 -->
+        <div class="blog-card fade-up blog-featured">
+          <div class="blog-header">
+            <div class="blog-icon">🤖</div>
+            <div>
+              <div class="blog-category">Agents IA</div>
+              <h2 class="blog-title">Comment Construire des Agents IA Autonomes</h2>
+            </div>
+          </div>
+          <div class="blog-body">
+            <p class="blog-excerpt">Découvrez comment construire des agents IA qui travaillent 24/7 sans supervision. Un guide complet avec architecture technique, cas d'usage réels et résultats mesurables.</p>
+            <div class="blog-meta">
+              <span>📅 Février 2024</span>
+              <span>⏱ 12 min de lecture</span>
+              <span>📊 2000+ mots</span>
+            </div>
+            <div class="blog-tags">
+              <span class="blog-tag">Agents IA</span>
+              <span class="blog-tag">Automatisation</span>
+              <span class="blog-tag">Architecture</span>
+              <span class="blog-tag">LLM</span>
+            </div>
+            <div class="blog-footer">
+              <a href="#" class="blog-cta">Lire l'article</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="blog-card fade-up">
+          <div class="blog-header">
+            <div class="blog-icon">🕷️</div>
+            <div>
+              <div class="blog-category">Scraping</div>
+              <h2 class="blog-title">Scraping Avancé : Contourner Cloudflare et DataDome</h2>
+            </div>
+          </div>
+          <div class="blog-body">
+            <p class="blog-excerpt">Les techniques les plus avancées pour extraire des données là où d'autres échouent. Cloudflare, DataDome, PerimeterX : aucune protection n'est insurmontable.</p>
+            <div class="blog-meta">
+              <span>📅 Février 2024</span>
+              <span>⏱ 15 min</span>
+            </div>
+            <div class="blog-tags">
+              <span class="blog-tag">Scraping</span>
+              <span class="blog-tag">Cloudflare</span>
+              <span class="blog-tag">Avancé</span>
+            </div>
+            <div class="blog-footer">
+              <a href="#" class="blog-cta">Lire l'article</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="blog-card fade-up">
+          <div class="blog-header">
+            <div class="blog-icon">🏦</div>
+            <div>
+              <div class="blog-category">Backends</div>
+              <h2 class="blog-title">Backend Fintech : 15k TPS et 99.99% Uptime</h2>
+            </div>
+          </div>
+          <div class="blog-body">
+            <p class="blog-excerpt">Comment construire un backend capable de traiter des millions de transactions avec une latence sub-50ms et une disponibilité quasi-parfaite.</p>
+            <div class="blog-meta">
+              <span>📅 Février 2024</span>
+              <span>⏱ 12 min</span>
+            </div>
+            <div class="blog-tags">
+              <span class="blog-tag">Fintech</span>
+              <span class="blog-tag">Performance</span>
+              <span class="blog-tag">Architecture</span>
+            </div>
+            <div class="blog-footer">
+              <a href="#" class="blog-cta">Lire l'article</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 4 -->
+        <div class="blog-card fade-up">
+          <div class="blog-header">
+            <div class="blog-icon">₿</div>
+            <div>
+              <div class="blog-category">Trading</div>
+              <h2 class="blog-title">Bots de Trading : Automatiser l'Arbitrage Crypto</h2>
+            </div>
+          </div>
+          <div class="blog-body">
+            <p class="blog-excerpt">Exploiter les écarts de prix entre exchanges avec un bot d'arbitrage sophistiqué. Exécution <200ms, gestion des risques intégrée, 3.2% ROI/mois.</p>
+            <div class="blog-meta">
+              <span>📅 Février 2024</span>
+              <span>⏱ 11 min</span>
+            </div>
+            <div class="blog-tags">
+              <span class="blog-tag">Trading</span>
+              <span class="blog-tag">Crypto</span>
+              <span class="blog-tag">Bots</span>
+            </div>
+            <div class="blog-footer">
+              <a href="#" class="blog-cta">Lire l'article</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 5 -->
+        <div class="blog-card fade-up">
+          <div class="blog-header">
+            <div class="blog-icon">🧠</div>
+            <div>
+              <div class="blog-category">Architecture</div>
+              <h2 class="blog-title">Architectures Multi-Agents : Orchestrer des Workflows Complexes</h2>
+            </div>
+          </div>
+          <div class="blog-body">
+            <p class="blog-excerpt">Comment orchestrer plusieurs agents spécialisés qui collaborent, partagent le contexte et gèrent les erreurs intelligemment.</p>
+            <div class="blog-meta">
+              <span>📅 Février 2024</span>
+              <span>⏱ 13 min</span>
+            </div>
+            <div class="blog-tags">
+              <span class="blog-tag">Multi-Agents</span>
+              <span class="blog-tag">Architecture</span>
+              <span class="blog-tag">Orchestration</span>
+            </div>
+            <div class="blog-footer">
+              <a href="#" class="blog-cta">Lire l'article</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coming Soon -->
+      <div style="text-align: center; margin-top: 80px; padding: 60px 40px; background: var(--bg2); border-radius: 16px;">
+        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">📚 Plus d'Articles à Venir</h3>
+        <p style="color: var(--muted); margin-bottom: 24px;">Nous publions régulièrement de nouveaux guides et insights. Restez à jour en nous suivant sur LinkedIn et X.</p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="btn-secondary">LinkedIn →</a>
+          <a href="https://x.com/BiliDzz48797" target="_blank" class="btn-secondary">X (Twitter) →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div style="text-align: center;">
+        <h2 class="section-title">Besoin d'Aide ?</h2>
+        <p class="section-desc" style="margin: 0 auto 40px;">Nos experts sont là pour vous. Décrivez votre projet et nous répondons sous 24h.</p>
+        <button onclick="openModal()" class="btn-primary">Démarrer une démo → 500€</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">RESIDUAL<span>.</span>LABS</div>
+        <p class="footer-desc">Studio technique spécialisé dans les agents IA, le scraping complexe et les backends haute friction.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="pricing.html">Tarifs</a></li>
+          <li><a href="process.html">Notre processus</a></li>
+          <li><a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank">LinkedIn</a></li>
+          <li><a href="#" onclick="openModal(); return false;">Nous contacter</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: <a href="#" onclick="openModal(); return false;">contact@residuallabs.io</a></p>
+        <p>Réponse sous 24h</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Residual Labs. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/global.js"></script>
+  <script src="../assets/js/analytics.js"></script>
+</body>
+</html>
