@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Residual Labs — Agents IA & Automation Premium</title>
-  <meta name="description" content="Studio technique spécialisé dans les agents IA autonomes, le scraping anti-détection et les backends haute friction. Livraison 2-6 semaines." />
+  <meta name="description" content="Studio technique spécialisé dans les agents IA autonomes, le scraping anti-détection et les backends haute friction." />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,9 +30,7 @@
       --border-medium: rgba(255, 255, 255, 0.12);
       --glow: rgba(124, 58, 237, 0.25);
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --danger: #ef4444;
+      --success: #0f0;
     }
     
     * {
@@ -41,79 +39,93 @@
       box-sizing: border-box;
     }
     
-    html {
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
     }
-    
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: var(--bg-primary);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
-      border-radius: 4px;
-    }
-    
+
     /* ═══════════════════════════════════════════════════════════════════════════════
-       TYPOGRAPHIE
+       TERMINAL LOADER COMPONENT (From Example)
        ═══════════════════════════════════════════════════════════════════════════════ */
     
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    @keyframes blinkCursor {
+      50% { border-right-color: transparent; }
     }
     
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      background: linear-gradient(135deg, var(--text-primary), var(--accent-tertiary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    @keyframes typeAndDelete {
+      0%, 10% { width: 0; }
+      45%, 55% { width: 6.2em; }
+      90%, 100% { width: 0; }
     }
-    
-    h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      margin-bottom: 1.5rem;
+
+    .terminal-loader {
+      border: 0.1em solid #333;
+      background-color: #1a1a1a;
+      color: var(--success);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.9em;
+      padding: 1.5em 1em;
+      width: 100%;
+      max-width: 14em;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      margin: 1rem 0;
     }
-    
-    h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+
+    .terminal-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1.5em;
+      background-color: #333;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      padding: 0 0.4em;
+      box-sizing: border-box;
     }
-    
-    p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      line-height: 1.75;
+
+    .terminal-controls {
+      float: right;
     }
-    
-    a {
-      color: var(--accent-secondary);
-      text-decoration: none;
-      transition: var(--transition);
+
+    .control {
+      display: inline-block;
+      width: 0.6em;
+      height: 0.6em;
+      margin-left: 0.4em;
+      border-radius: 50%;
+      background-color: #777;
     }
-    
-    a:hover {
-      color: var(--accent-tertiary);
+
+    .control.close { background-color: #e33; }
+    .control.minimize { background-color: #ee0; }
+    .control.maximize { background-color: #0b0; }
+
+    .terminal-title {
+      float: left;
+      line-height: 1.5em;
+      color: #eee;
+      font-size: 0.7em;
     }
-    
+
+    .terminal-text {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 0.2em solid var(--success);
+      animation: typeAndDelete 4s steps(11) infinite, blinkCursor 0.5s step-end infinite alternate;
+      margin-top: 0.5em;
+    }
+
     /* ═══════════════════════════════════════════════════════════════════════════════
-       LAYOUT & CONTAINERS
+       DESIGN SYSTEM
        ═══════════════════════════════════════════════════════════════════════════════ */
     
     .container {
@@ -121,16 +133,7 @@
       margin: 0 auto;
       padding: 0 1.5rem;
     }
-    
-    section {
-      padding: 5rem 0;
-      position: relative;
-    }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       HEADER & NAVIGATION
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
+
     .header {
       position: fixed;
       top: 0;
@@ -142,49 +145,32 @@
       border-bottom: 1px solid var(--border-light);
       padding: 1rem 0;
     }
-    
+
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
     }
-    
+
     .nav-logo {
       font-size: 1.3rem;
       font-weight: 900;
-      letter-spacing: -0.05em;
       background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
-    
+
     .nav-links {
       display: flex;
       gap: 2rem;
       align-items: center;
     }
-    
-    .nav-link {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      transition: var(--transition);
-    }
-    
-    .nav-link:hover {
-      color: var(--accent-secondary);
-    }
-    
+
     .social-icons {
       display: flex;
       gap: 1rem;
-      align-items: center;
     }
-    
+
     .social-icon {
       width: 36px;
       height: 36px;
@@ -196,37 +182,14 @@
       border-radius: 8px;
       color: var(--text-secondary);
       transition: var(--transition);
-      font-size: 1.1rem;
     }
-    
+
     .social-icon:hover {
-      background: rgba(124, 58, 237, 0.2);
       border-color: var(--accent-secondary);
       color: var(--accent-secondary);
       transform: translateY(-2px);
     }
-    
-    .nav-cta {
-      padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-    }
-    
-    .nav-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
-    }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       HERO SECTION
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
+
     .hero {
       min-height: 100vh;
       display: flex;
@@ -234,738 +197,179 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin-top: 60px;
-      position: relative;
-      overflow: hidden;
+      padding-top: 80px;
     }
-    
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
-      animation: float 20s ease-in-out infinite;
-      z-index: -1;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(30px, -30px); }
-    }
-    
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: rgba(124, 58, 237, 0.1);
-      border: 1px solid var(--border-medium);
-      border-radius: 20px;
-      font-size: 0.85rem;
-      color: var(--accent-secondary);
-      margin-bottom: 2rem;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.1em;
-    }
-    
-    .dot-live {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    
-    .hero h1 {
-      margin-bottom: 1.5rem;
-      max-width: 900px;
-    }
-    
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      line-height: 1.8;
-    }
-    
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 4rem;
-    }
-    
-    .btn-primary {
-      padding: 1rem 2rem;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(124, 58, 237, 0.5);
-    }
-    
-    .btn-secondary {
-      padding: 1rem 2rem;
-      background: transparent;
-      color: var(--text-primary);
-      border: 2px solid var(--border-medium);
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    
-    .btn-secondary:hover {
-      border-color: var(--accent-secondary);
-      background: rgba(124, 58, 237, 0.06);
-      color: var(--accent-secondary);
-    }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       LIVE CARDS (BENTO GRID 2.0)
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    
-    .live-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      min-height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    
-    .live-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .live-card:hover {
-      border-color: var(--accent-secondary);
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2), inset 0 0 20px rgba(124, 58, 237, 0.05);
-    }
-    
-    .live-card:hover::before {
-      opacity: 1;
-    }
-    
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .card-icon {
-      font-size: 2.5rem;
-    }
-    
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .card-content {
-      position: relative;
-      z-index: 2;
-      flex: 1;
-    }
-    
-    .card-content p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-    
-    /* Terminal Card */
-    .terminal-output {
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid var(--success);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--success);
-      line-height: 1.4;
-      max-height: 150px;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .terminal-line {
-      margin-bottom: 0.5rem;
-      animation: typewriter 0.3s ease-out forwards;
-    }
-    
-    @keyframes typewriter {
-      from {
-        width: 0;
-        opacity: 0;
-      }
-      to {
-        width: 100%;
-        opacity: 1;
-      }
-    }
-    
-    .terminal-cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background: var(--success);
-      animation: blink 1s infinite;
-      margin-left: 2px;
-    }
-    
-    @keyframes blink {
-      0%, 49%, 100% { opacity: 1; }
-      50%, 99% { opacity: 0; }
-    }
-    
-    /* Radar Card */
-    .radar-container {
-      width: 100%;
-      height: 120px;
-      position: relative;
-      margin: 1rem 0;
-    }
-    
-    .radar-circle {
-      position: absolute;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    
-    .radar-circle:nth-child(1) {
-      width: 20px;
-      height: 20px;
-    }
-    
-    .radar-circle:nth-child(2) {
-      width: 50px;
-      height: 50px;
-    }
-    
-    .radar-circle:nth-child(3) {
-      width: 80px;
-      height: 80px;
-    }
-    
-    .radar-dot {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: var(--accent-secondary);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      animation: radar-spin 4s linear infinite;
-      box-shadow: 0 0 10px var(--accent-secondary);
-    }
-    
-    @keyframes radar-spin {
-      from { transform: translate(-50%, -50%) rotate(0deg) translateX(40px) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg) translateX(40px) rotate(-360deg); }
-    }
-    
-    /* Database Card */
-    .db-schema {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin: 1rem 0;
-    }
-    
-    .db-table {
-      background: rgba(124, 58, 237, 0.1);
-      border: 1px solid var(--accent-secondary);
-      border-radius: 6px;
-      padding: 0.75rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent-secondary);
-      animation: pulse-db 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse-db {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    
-    /* Gears Card */
-    .gears-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin: 1rem 0;
-      height: 100px;
-    }
-    
-    .gear {
-      font-size: 2rem;
-      animation: rotate-gear 3s linear infinite;
-    }
-    
-    .gear:nth-child(2) {
-      animation: rotate-gear-reverse 3s linear infinite;
-    }
-    
-    @keyframes rotate-gear {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    
-    @keyframes rotate-gear-reverse {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(-360deg); }
-    }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       STATS SECTION
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    
-    .stat-card {
-      text-align: center;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-light);
-      border-radius: 12px;
-      transition: var(--transition);
-    }
-    
-    .stat-card:hover {
-      border-color: var(--accent-secondary);
-      background: rgba(124, 58, 237, 0.05);
-    }
-    
-    .stat-number {
-      font-size: 2.5rem;
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
       font-weight: 900;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to bottom, #fff, #888);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
     }
-    
-    .stat-label {
-      font-size: 0.9rem;
+
+    .hero-subtitle {
+      font-size: 1.2rem;
       color: var(--text-muted);
-      font-weight: 500;
+      max-width: 600px;
+      margin-bottom: 3rem;
     }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
-    footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border-light);
-      padding: 3rem 0;
-      margin-top: 5rem;
-    }
-    
-    .footer-content {
+
+    .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(300px, auto);
+      gap: 1.5rem;
+      margin: 4rem 0;
     }
-    
-    .footer-section h4 {
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-    }
-    
-    .footer-section ul {
-      list-style: none;
-    }
-    
-    .footer-section ul li {
-      margin-bottom: 0.75rem;
-    }
-    
-    .footer-section a {
-      color: var(--text-secondary);
+
+    .bento-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
       transition: var(--transition);
     }
-    
-    .footer-section a:hover {
-      color: var(--accent-secondary);
-    }
-    
-    .footer-social {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    
-    .footer-social a {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(124, 58, 237, 0.1);
-      border: 1px solid var(--border-medium);
-      border-radius: 8px;
-      transition: var(--transition);
-    }
-    
-    .footer-social a:hover {
-      background: rgba(124, 58, 237, 0.2);
+
+    .bento-item:hover {
       border-color: var(--accent-secondary);
+      background: var(--bg-tertiary);
     }
-    
-    .footer-bottom {
-      text-align: center;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border-light);
+
+    .bento-item.large {
+      grid-column: span 2;
+    }
+
+    .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-secondary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .card-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
-    
-    /* ═══════════════════════════════════════════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════════════════════════════════════════ */
-    
-    @media (max-width: 768px) {
-      .nav-links {
-        gap: 1rem;
-      }
-      
-      .social-icons {
-        display: none;
-      }
-      
-      .hero-ctas {
-        flex-direction: column;
-      }
-      
-      .bento-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      section {
-        padding: 3rem 0;
-      }
+
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 100px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 992px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-item.large { grid-column: span 1; }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
   <header class="header">
-    <nav class="navbar">
+    <div class="container navbar">
       <div class="nav-logo">RESIDUAL.LABS</div>
       <div class="nav-links">
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#about" class="nav-link">À Propos</a>
-        <a href="#contact" class="nav-link">Contact</a>
         <div class="social-icons">
-          <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="social-icon" title="LinkedIn">in</a>
-          <a href="https://x.com/BiliDzz48797" target="_blank" class="social-icon" title="X / Twitter">𝕏</a>
-          <a href="https://discord.gg/residuallabs" target="_blank" class="social-icon" title="Discord">💬</a>
+          <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" class="social-icon">in</a>
+          <a href="https://x.com/BiliDzz48797" target="_blank" class="social-icon">𝕏</a>
         </div>
-        <button class="nav-cta" onclick="scrollToContact()">Démarrer →</button>
+        <button class="btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">Contact</button>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-tag">
-      <span class="dot-live"></span>
-      <span>Studio Technique Premium</span>
-    </div>
-    
-    <h1>Les systèmes que personne<br />ne veut construire.</h1>
-    
-    <p class="hero-subtitle">
-      Agents IA autonomes, scraping anti-détection, backends haute friction.<br />
-      Prix fixe. Code source complet. Livraison 2-6 semaines.
-    </p>
-    
-    <div class="hero-ctas">
-      <button class="btn-primary" onclick="scrollToContact()">Lancer ma démo — 500€</button>
-      <button class="btn-secondary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})">Voir nos services</button>
-    </div>
+  <section class="hero container">
+    <h1>Engineering<br/>the Impossible.</h1>
+    <p class="hero-subtitle">Studio technique d'élite. Agents IA, Scraping massif et Infrastructures haute friction.</p>
+    <button class="btn-primary">Démarrer un projet</button>
   </section>
 
-  <!-- SERVICES avec LIVE CARDS -->
-  <section id="services" class="container">
-    <h2>Ce que nous construisons</h2>
-    <p style="color: var(--text-muted); margin-bottom: 2rem;">Les solutions les plus complexes et les plus exigeantes du marché.</p>
-    
-    <div class="bento-grid">
-      <!-- SCRAPING CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">🕷️</div>
-          <div class="card-title">Scraping & Data</div>
-        </div>
-        <div class="card-content">
-          <p>Extraction de données où d'autres échouent. Cloudflare, DataDome, PerimeterX, JS dynamique, millions de pages.</p>
-          <div class="terminal-output">
-            <div class="terminal-line">$ scraper --target=cloudflare</div>
-            <div class="terminal-line">✓ Bypass successful: 200 OK</div>
-            <div class="terminal-line">✓ Data extracted: 50,000 rows</div>
-            <div class="terminal-line">$ <span class="terminal-cursor"></span></div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- AGENTS CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">🤖</div>
-          <div class="card-title">Agents Autonomes</div>
-        </div>
-        <div class="card-content">
-          <p>Agents IA qui travaillent 24/7 sans supervision : recherche, génération de contenu, analyse de données.</p>
-          <div class="radar-container">
-            <div class="radar-circle"></div>
-            <div class="radar-circle"></div>
-            <div class="radar-circle"></div>
-            <div class="radar-dot"></div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- BACKEND CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">🔧</div>
-          <div class="card-title">Backends & APIs</div>
-        </div>
-        <div class="card-content">
-          <p>APIs REST/GraphQL haute disponibilité, microservices, files d'attente, intégrations tierces.</p>
-          <div class="db-schema">
-            <div class="db-table">users</div>
-            <div class="db-table">orders</div>
-            <div class="db-table">analytics</div>
-            <div class="db-table">cache</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- AUTOMATION CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">⚙️</div>
-          <div class="card-title">Bots & Automation</div>
-        </div>
-        <div class="card-content">
-          <p>Bots sophistiqués indétectables : trading, réservation, gestion de comptes, migration de données.</p>
-          <div class="gears-container">
-            <div class="gear">⚙️</div>
-            <div class="gear">⚙️</div>
-            <div class="gear">⚙️</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- WEB APPS CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">🌐</div>
-          <div class="card-title">Applications Web</div>
-        </div>
-        <div class="card-content">
-          <p>Du concept au déploiement : apps web modernes, e-commerce, dashboards, PWA. React, Next.js, Flutter.</p>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
-            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid var(--accent-secondary); border-radius: 4px; padding: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--accent-secondary);">React</div>
-            <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid var(--accent-secondary); border-radius: 4px; padding: 0.5rem; font-size: 0.8rem; text-align: center; color: var(--accent-secondary);">Next.js</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- MULTI-AGENTS CARD -->
-      <div class="live-card">
-        <div class="card-header">
-          <div class="card-icon">🧠</div>
-          <div class="card-title">Multi-Agents</div>
-        </div>
-        <div class="card-content">
-          <p>Orchestration de workflows complexes avec plusieurs agents spécialisés qui collaborent et gèrent les erreurs.</p>
-          <div style="display: flex; justify-content: space-around; margin-top: 1rem; font-size: 1.5rem;">
-            <span>🔗</span>
-            <span>🔗</span>
-            <span>🔗</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
   <section class="container">
-    <h2>Nos résultats</h2>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">40h</div>
-        <div class="stat-label">Économisées par semaine</div>
+    <div class="bento-grid">
+      <!-- LIVE TERMINAL CARD -->
+      <div class="bento-item large">
+        <span class="card-label">Real-time Extraction</span>
+        <h3 class="card-title">Scraping Anti-Détection</h3>
+        <p class="card-desc">Nous contournons Cloudflare, DataDome et PerimeterX pour extraire vos données à l'échelle mondiale.</p>
+        
+        <div class="terminal-loader">
+          <div class="terminal-header">
+            <div class="terminal-title">Bypass Status</div>
+            <div class="terminal-controls">
+              <div class="control close"></div>
+              <div class="control minimize"></div>
+              <div class="control maximize"></div>
+            </div>
+          </div>
+          <div class="terminal-text">Scraping...</div>
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">78%</div>
-        <div class="stat-label">Tickets résolus auto</div>
+
+      <!-- AI CARD -->
+      <div class="bento-item">
+        <span class="card-label">Autonomous Intelligence</span>
+        <h3 class="card-title">Agents IA</h3>
+        <p class="card-desc">Des agents qui pensent, agissent et apprennent 24/7.</p>
+        <div style="margin-top: 2rem; height: 2px; background: linear-gradient(to right, var(--accent-primary), transparent); width: 100%;"></div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">15K</div>
-        <div class="stat-label">TPS atteints</div>
+
+      <!-- AUTOMATION CARD -->
+      <div class="bento-item">
+        <span class="card-label">Workflow</span>
+        <h3 class="card-title">Automation</h3>
+        <p class="card-desc">Connectez LinkedIn, X et Discord à votre cerveau IA.</p>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">99.99%</div>
-        <div class="stat-label">Uptime garanti</div>
+
+      <!-- BACKEND CARD -->
+      <div class="bento-item large">
+        <span class="card-label">Infrastructure</span>
+        <h3 class="card-title">High-Friction Backends</h3>
+        <p class="card-desc">Systèmes distribués capables d'encaisser des millions de requêtes par seconde.</p>
       </div>
     </div>
   </section>
 
-  <!-- CTA FINAL -->
-  <section id="contact" class="container" style="text-align: center; padding: 5rem 0;">
-    <h2>Prêt à démarrer ?</h2>
-    <p style="max-width: 600px; margin: 1.5rem auto 2rem;">Décrivez-nous votre projet. Nous répondons sous 24h avec une analyse et un prix fixe.</p>
-    <button class="btn-primary" onclick="alert('Formulaire de contact - À intégrer avec Netlify Functions')">Envoyer ma description → 500€</button>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
+  <footer style="padding: 4rem 0; border-top: 1px solid var(--border-light); text-align: center;">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Residual Labs</h4>
-          <p>Studio technique spécialisé dans les agents IA, le scraping complexe et les backends haute friction.</p>
-          <div class="footer-social">
-            <a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank" title="LinkedIn">in</a>
-            <a href="https://x.com/BiliDzz48797" target="_blank" title="X / Twitter">𝕏</a>
-            <a href="https://discord.gg/residuallabs" target="_blank" title="Discord">💬</a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">À Propos</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Ressources</h4>
-          <ul>
-            <li><a href="https://www.linkedin.com/in/residual-labs-1123093b3" target="_blank">LinkedIn</a></li>
-            <li><a href="https://x.com/BiliDzz48797" target="_blank">X / Twitter</a></li>
-            <li><a href="https://discord.gg/residuallabs" target="_blank">Discord</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Residual Labs. Tous droits réservés.</p>
-      </div>
+      <p style="color: var(--text-muted);">&copy; 2026 Residual Labs. Built for the future.</p>
     </div>
   </footer>
 
-  <!-- GSAP & ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  
   <script>
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Animation des live cards au scroll
-    gsap.utils.toArray('.live-card').forEach((element, index) => {
-      gsap.from(element, {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        delay: index * 0.1,
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 80%'
-        }
-      });
+    gsap.from("h1", { opacity: 0, y: 100, duration: 1, ease: "power4.out" });
+    gsap.from(".hero-subtitle", { opacity: 0, y: 20, duration: 1, delay: 0.3 });
+    gsap.from(".bento-item", { 
+      opacity: 0, 
+      y: 40, 
+      duration: 0.8, 
+      stagger: 0.2, 
+      ease: "power3.out",
+      delay: 0.5 
     });
-    
-    // Animation des stat cards
-    gsap.utils.toArray('.stat-card').forEach((element, index) => {
-      gsap.from(element, {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.6,
-        delay: index * 0.1,
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 85%'
-        }
-      });
-    });
-    
-    // Parallax subtle
-    gsap.to('.hero::before', {
-      y: 100,
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-      }
-    });
-    
-    function scrollToContact() {
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    }
   </script>
 </body>
 </html>
